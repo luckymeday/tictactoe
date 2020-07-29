@@ -23,8 +23,6 @@ export default class Square extends Component {
                 onClick={() => this.props.selectSquare(this.props.id)}>
                 {this.props.value}
             </div>
-
-
         );
     }
 }

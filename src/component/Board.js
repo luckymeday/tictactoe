@@ -1,29 +1,53 @@
 import React, { Component } from 'react'
 import Square from './Square'
 
-export default class Board extends Component {
+// 1. calculate which is a winner, when you have a winner, show X is a winner 
+// 2. if there is not a winner, show "Game Over" 
+// 3. if the user tries to click the square that already is clicked, block it 
+// 4. make a history
 
+export default class Board extends Component {
     selectSquare = (id) => {
+        let array = this.props.squareList.slice();
+        let isGameOver = false // made this variable, cuz couldn't update directly this.props.gameOver(which is for read only)
+        let historyArray = this.props.history.slice();
+
         if (this.props.squareList[id] !== "") {
+            alert("Click another square!")
             return
         }
-        // console.log("id:", id)
-        let historyList = (this.props.nextPlayer.length - 1).push
-        console.log("history list:", historyList)
-        // console.log("game over:", this.props.gameover)
-        let isGameOver = false // made this variable, couldn't use props
-        let array = this.props.squareList;
+        if (this.props.gameOver) {
+            alert("Game Over!")
+            return
+        }
+
         array[id] = this.props.nextPlayer ? "X" : "O";
-        // console.log("player:", this.props.nextPlayer)
-        let winnerValue = this.calculateWinner(this.props.squareList);
-        if (winnerValue !== null) { isGameOver = true }
+
+        let winnerValue = this.calculateWinner(array);
+        console.log('winnerValue:', winnerValue)
+        if (winnerValue !== null) {
+            this.props.postData();
+        }
+
+        if (winnerValue !== null) {
+            isGameOver = true;
+        }
+        else if (winnerValue === null && !array.includes("")) {
+            isGameOver = true;
+        }
+
+        historyArray.push({
+            squareList: array,
+            nextPlayer: !this.props.nextPlayer
+        });
+
         this.props.setParentsState
             ({
                 squareList: array,
                 nextPlayer: !this.props.nextPlayer,
                 winner: winnerValue,
-                gameover: isGameOver, // from the App.js
-                history: historyList,
+                gameOver: isGameOver,
+                history: historyArray,
             });
     };
 
@@ -46,18 +70,9 @@ export default class Board extends Component {
         }
         return null;
     }
-
     render() {
-        // 1. calculate which is a winner, when you have a winner, show X is a winner //
-        // 2. if there is not a winner, show "Game Over" //
-        // 3. if the user tries to click the square that already is clicked, block it //
-        // 4. make a history
-
-        return (
-            <div className="game">
-                <h4> Next Player: {this.props.nextPlayer ? `X` : `O`}</h4>
-                <h4> Winner: {this.props.winner}</h4>
-                <h4> Game: {this.props.gameover ? <h1>Game Over</h1> : `Gaming`}</h4>
+        return (   
+            <div className="border-red">      
                 <div style={{ display: "flex" }}>
                     <Square id={0} selectSquare={this.selectSquare} value={this.props.squareList[0]} />
                     <Square id={1} selectSquare={this.selectSquare} value={this.props.squareList[1]} />
@@ -73,12 +88,7 @@ export default class Board extends Component {
                     <Square id={7} selectSquare={this.selectSquare} value={this.props.squareList[7]} />
                     <Square id={8} selectSquare={this.selectSquare} value={this.props.squareList[8]} />
                 </div>
-                <h4> History: <button className="history">
-
-
-
-                </button></h4>
-            </div >
+            </div>
         )
     }
 }

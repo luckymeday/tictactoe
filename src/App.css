@@ -1,6 +1,15 @@
 .square{
-width: 200px;
-height: 200px;
-border: solid 5px palevioletred;
+width: 150px;
+height: 150px;
+border: solid 3px palevioletred;
 font-size: 30px;
+}
+
+.border-red{
+  border: 1px solid red;
+}
+
+.body {
+  /* text-align: center; */
+  margin: 70px;
 }
