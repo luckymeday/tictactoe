@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Board from "./component/Board";
 import SignInPage from "./component/SignInPage";
 import "./App.css";
+let timer;
 export default class App extends Component {
 
   // 1. facebook login
@@ -18,12 +19,23 @@ export default class App extends Component {
       history: [],
       picture: "",
       rankingList: [],
+      firstClick: true,
+      elapsedTime: 0,
     };
   }
+
   setParentsState = (obj) => {
     console.log("obj?", obj)
     this.setState(obj)
   };
+
+  stopTimer = () => {
+    clearInterval(timer)
+  }
+
+  countTime = () => {
+    timer = setInterval(() => this.setState({ elapsedTime: this.state.elapsedTime + 1 }), 1000)
+  }
 
   responseFacebook = (response) => {
     this.setState({ ...this.state, picture: response.picture.data.url, userName: response.name })
@@ -34,7 +46,7 @@ export default class App extends Component {
     let data = new URLSearchParams();
 
     data.append("player", this.state.userName);
-    data.append("score", 1);
+    data.append("score", this.state.elapsedTime);
 
     const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
     const result = await fetch(url, {
@@ -52,7 +64,7 @@ export default class App extends Component {
     let url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
     let data = await fetch(url);
     let result = await data.json();
-    console.log("result:",result)
+    console.log("result:", result)
     this.setState({ ...this.state, rankingList: result.items })
   }
 
@@ -69,6 +81,7 @@ export default class App extends Component {
     return (
       <div>
         <div className="body border-red">
+          {this.state.elapsedTime}
           <SignInPage responseFacebook={this.responseFacebook} />
           <h1>Tic Tac Toe</h1>
           <h3>User Name : {this.state.userName}</h3>
@@ -79,6 +92,7 @@ export default class App extends Component {
           <div className="row">
             <div className="col-sm-8 border-red">
               <Board
+                countTime={this.countTime}
                 postData={this.postData}
                 squareList={this.state.squareList}
                 setParentsState={this.setParentsState}
@@ -87,6 +101,8 @@ export default class App extends Component {
                 gameOver={this.state.gameOver}
                 history={this.state.history}
                 rankingList={this.getData}
+                firstClick={this.state.firstClick}
+                stopTimer={this.stopTimer}
               />
             </div>
             <div className="col-sm-4 border-red">
@@ -119,3 +135,4 @@ export default class App extends Component {
 // useEffect === componentDidMount()
 // useState === this.state={}
 // setWinner() => this.setState()
+

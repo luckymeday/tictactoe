@@ -8,6 +8,12 @@ import Square from './Square'
 
 export default class Board extends Component {
     selectSquare = (id) => {
+        if (this.props.firstClick) {
+            this.props.countTime()
+            this.props.setParentsState({ firstClick: false })
+        }
+this.setState({})
+
         let array = this.props.squareList.slice();
         let isGameOver = false // made this variable, cuz couldn't update directly this.props.gameOver(which is for read only)
         let historyArray = this.props.history.slice();
@@ -31,9 +37,12 @@ export default class Board extends Component {
 
         if (winnerValue !== null) {
             isGameOver = true;
+            this.props.stopTimer()
+
         }
         else if (winnerValue === null && !array.includes("")) {
             isGameOver = true;
+            this.props.stopTimer()
         }
 
         historyArray.push({
@@ -71,8 +80,8 @@ export default class Board extends Component {
         return null;
     }
     render() {
-        return (   
-            <div className="border-red">      
+        return (
+            <div className="border-red">
                 <div style={{ display: "flex" }}>
                     <Square id={0} selectSquare={this.selectSquare} value={this.props.squareList[0]} />
                     <Square id={1} selectSquare={this.selectSquare} value={this.props.squareList[1]} />
