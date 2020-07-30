@@ -92,8 +92,14 @@ export default class App extends Component {
           <h1>Tic Tac Toe</h1>
           <h3>User Name : {this.state.userName}</h3>
           <div><img src={this.state.picture} /></div>
-          <h6> Next Player: {this.state.nextPlayer ? `X` : `O`}</h6>
-          <h6> Winner: {this.state.winner}</h6>
+          <h6> Next Player:
+            {this.state.nextPlayer ?
+              <img src="./mic.png" width="5%" alt="..."></img> :
+              <img src="./min.png" width="5%" alt="..."></img>}
+          </h6>
+          <h6> Winner: {this.state.winner === "X" ? <img src="./mic.png" width="5%" alt="..."></img> :
+            this.state.winner === "O" ? <img src="./min.png" width="5%" alt="..."></img> : ""}
+          </h6>
           <h6> Game: {this.state.gameOver ? `Game Over` : `Gaming`}</h6>
           <div className="row">
             <div className="board-main col-sm-8 border-red">
