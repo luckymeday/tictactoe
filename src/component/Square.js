@@ -21,7 +21,11 @@ export default class Square extends Component {
             <div
                 className="square"
                 onClick={() => this.props.selectSquare(this.props.id)}>
-                {this.props.value}
+                {/* {this.props.value} */}
+                {this.props.value
+                    === "X" ? <img src="./mic.png" width="85%" alt="..."></img> :
+                    this.props.value
+                        === "O" ? <img src="./min.png" width="85%" alt="..."></img> : ""}
             </div>
         );
     }

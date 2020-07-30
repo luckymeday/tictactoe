@@ -1,15 +1,30 @@
 .square{
 width: 150px;
 height: 150px;
-border: solid 3px palevioletred;
+border: solid 5px rgb(194, 55, 101);
 font-size: 30px;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
-.border-red{
+/* .border-red{
   border: 1px solid red;
-}
+} */
 
 .body {
-  /* text-align: center; */
+  text-align: center;
   margin: 70px;
+}
+
+.board-main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whole-part{
+  background-color: rgb(230, 216, 216);
+  height: 200vh;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

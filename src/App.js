@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import Board from "./component/Board";
 import SignInPage from "./component/SignInPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
+
+
+
+
 let timer;
 export default class App extends Component {
 
@@ -79,18 +84,21 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="whole-part">
+        <SignInPage responseFacebook={this.responseFacebook} className="sign-in" />
         <div className="body border-red">
-          {this.state.elapsedTime}
-          <SignInPage responseFacebook={this.responseFacebook} />
+          <h6> Elapsed Time :{this.state.elapsedTime}</h6>
+
           <h1>Tic Tac Toe</h1>
           <h3>User Name : {this.state.userName}</h3>
           <div><img src={this.state.picture} /></div>
-          <h4> Next Player: {this.state.nextPlayer ? `X` : `O`}</h4>
-          <h4> Winner: {this.state.winner}</h4>
-          <h4> Game: {this.state.gameOver ? `Game Over` : `Gaming`}</h4>
+          <h6> Next Player:{this.state.nextPlayer === "X" ? <img src="./mic.png" width="85%" alt="..."></img> :
+            this.state.nextPlayer === "O" ? <img src="./min.png" width="85%" alt="..."></img> : ""}
+          </h6>
+          <h6> Winner: {this.state.winner}</h6>
+          <h6> Game: {this.state.gameOver ? `Game Over` : `Gaming`}</h6>
           <div className="row">
-            <div className="col-sm-8 border-red">
+            <div className="board-main col-sm-8 border-red">
               <Board
                 countTime={this.countTime}
                 postData={this.postData}
@@ -103,11 +111,12 @@ export default class App extends Component {
                 rankingList={this.getData}
                 firstClick={this.state.firstClick}
                 stopTimer={this.stopTimer}
+
               />
             </div>
             <div className="col-sm-4 border-red">
               <ol>
-                <h4>
+                <h6>
                   <p>History</p>
                   {this.state.history.map((record, index) => {
                     return (
@@ -122,7 +131,7 @@ export default class App extends Component {
                       <li> {item.player} :{item.score}</li>
                     );
                   })}
-                </h4>
+                </h6>
               </ol>
             </div>
           </div>
