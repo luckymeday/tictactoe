@@ -92,9 +92,7 @@ export default class App extends Component {
           <h1>Tic Tac Toe</h1>
           <h3>User Name : {this.state.userName}</h3>
           <div><img src={this.state.picture} /></div>
-          <h6> Next Player:{this.state.nextPlayer === "X" ? <img src="./mic.png" width="85%" alt="..."></img> :
-            this.state.nextPlayer === "O" ? <img src="./min.png" width="85%" alt="..."></img> : ""}
-          </h6>
+          <h6> Next Player: {this.state.nextPlayer ? `X` : `O`}</h6>
           <h6> Winner: {this.state.winner}</h6>
           <h6> Game: {this.state.gameOver ? `Game Over` : `Gaming`}</h6>
           <div className="row">
@@ -121,7 +119,7 @@ export default class App extends Component {
                   {this.state.history.map((record, index) => {
                     return (
                       <li>
-                        <button onClick={() => this.backToPast(index)}>Go to: {index + 1}</button>
+                        <button className="buttons" onClick={() => this.backToPast(index)}>Go to: {index + 1}</button>
                       </li>
                     );
                   })}

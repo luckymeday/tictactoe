@@ -12,7 +12,7 @@ export default class Board extends Component {
             this.props.countTime()
             this.props.setParentsState({ firstClick: false })
         }
-this.setState({})
+        this.setState({})
 
         let array = this.props.squareList.slice();
         let isGameOver = false // made this variable, cuz couldn't update directly this.props.gameOver(which is for read only)
